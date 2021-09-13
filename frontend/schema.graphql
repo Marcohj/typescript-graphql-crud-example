@@ -1,0 +1,78 @@
+type Col {
+  id: Int!
+  position: Int!
+  column_name: String!
+  project_column_name: String!
+  regex: String!
+}
+
+input ColInput {
+  position: Int!
+  column_name: String!
+  project_column_name: String!
+  regex: String
+  entrypointId: Int!
+}
+
+input ColUpdateInput {
+  position: Int!
+  column_name: String!
+  project_column_name: String!
+  regex: String
+}
+
+type Entrypoint {
+  id: Int!
+  title: String!
+  url: String!
+  has_headers: Boolean!
+  data: String
+  project: Project
+  cols: [Col!]
+}
+
+input EntrypointInput {
+  title: String!
+  url: String!
+  has_headers: Boolean!
+  projectId: Int!
+}
+
+input EntrypointUpdateInput {
+  title: String!
+  url: String!
+  has_headers: Boolean!
+}
+
+type Mutation {
+  createProject(input: ProjectInput!): Project!
+  updateProject(input: ProjectUpdateInput!, id: Int!): Boolean!
+  deleteProject(id: Int!): Boolean!
+  createEntrypoint(input: EntrypointInput!): Entrypoint!
+  updateEntrypoint(input: EntrypointUpdateInput!, id: Int!): Entrypoint!
+  deleteEntrypoint(id: Int!): Entrypoint!
+  createCol(input: ColInput!): Col!
+  updateCol(input: ColUpdateInput!, id: Int!): Col!
+  deleteCol(id: Int!): Col!
+}
+
+type Project {
+  id: Int!
+  title: String!
+  entrypoints: [Entrypoint!]!
+}
+
+input ProjectInput {
+  title: String!
+}
+
+input ProjectUpdateInput {
+  title: String
+}
+
+type Query {
+  projects: [Project!]!
+  entrypoints: [Entrypoint!]!
+  cols: [Col!]!
+}
+

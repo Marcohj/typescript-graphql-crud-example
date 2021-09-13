@@ -19,7 +19,13 @@ import { ColResolver } from "./resolvers/ColResolver";
 		context: ({ req, res }) => ({ req, res }),
 	});
 
-	apolloServer.applyMiddleware({ app, cors: false });
+	apolloServer.applyMiddleware({
+		app,
+		cors: {
+			origin: "*", // <- allow request from all domains
+			credentials: true,
+		},
+	});
 
 	app.listen(4000, () => {
 		console.log("express server started");

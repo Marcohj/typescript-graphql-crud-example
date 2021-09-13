@@ -25,6 +25,10 @@ export class Entrypoint extends BaseEntity {
 	@Column()
 	url: string;
 
+	@Field()
+	@Column()
+	has_headers: boolean;
+
 	@Field({ nullable: true })
 	@Column({ nullable: true })
 	data: string;
