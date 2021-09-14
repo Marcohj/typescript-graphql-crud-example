@@ -1,20 +1,16 @@
-import Layout from '../../components/layout'
-import Head from 'next/head'
+import React from "react";
+import Project from "components/project/project";
+import Layout from "components/layout";
+import { useRouter } from "next/dist/client/router";
 
-export default function Post({
-  postData
-}: {
-  postData: {
-    title: string
-    date: string
-    contentHtml: string
-  }
-}) {
+export default function ProjectPage() {
+	const router = useRouter();
+	const { id } = router.query;
+  const projectId = parseInt(id as string)
+
   return (
-    <Layout>
-      <Head>
-        <title>{postData.title}</title>
-      </Head>
-    </Layout>
-  )
+		<Layout>
+			<Project id={projectId} />
+		</Layout>
+	);
 }

@@ -22,6 +22,7 @@ export class Project extends BaseEntity {
 	@Field(() => [Entrypoint])
 	@OneToMany(() => Entrypoint, (entrypoint) => entrypoint.project, {
 		lazy: true,
+		onDelete: "CASCADE",
 	})
 	entrypoints: Entrypoint[];
 }

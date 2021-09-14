@@ -18,7 +18,7 @@ class EntrypointInput {
 	url: string;
 
 	@Field()
-	has_headers: boolean;
+	hasHeaders: boolean;
 
 	@Field(() => Int)
 	projectId: number;
@@ -33,7 +33,7 @@ class EntrypointUpdateInput {
 	url: string;
 
 	@Field()
-	has_headers: boolean;
+	hasHeaders: boolean;
 }
 
 @Resolver()

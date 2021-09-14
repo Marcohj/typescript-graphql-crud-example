@@ -22,10 +22,17 @@ const CREATE_PROJECT_MUTATION = gql`
 	}
 `;
 
+const DELETE_PROJECT_MUTATION = gql`
+	mutation DeleteProject($id: Int!) {
+		deleteProject(id: $id)
+	}
+`;
+
 const Projects = () => {
 	const { loading, error, data, refetch } = useQuery(PROJECTS_QUERY);
 
 	const [createProject] = useMutation(CREATE_PROJECT_MUTATION);
+	const [deleteProject] = useMutation(DELETE_PROJECT_MUTATION);
 
 	const form = useForm({ title: "" }, (values) =>
 		handleCreateProject(values.title)
@@ -39,28 +46,55 @@ const Projects = () => {
 	const handleCreateProject = (title: string) => {
 		createProject({
 			variables: { title },
-		}).then(() => refetch);
+		}).then(() => {
+			refetch();
+			form.formClear;
+		});
+	};
+
+	const handleDeleteProject = (id: string) => {
+		deleteProject({
+			variables: { id },
+		}).then(() => {
+			refetch();
+			form.formClear;
+		});
 	};
 
 	return (
 		<div>
-			<hr />
 			<h2>Projects</h2>
-			<div className="list-group">
+			<div className="grid">
 				{projects?.map(({ id, title }) => (
-					<Link href={`/projects/${id}`} key={id}>
-						<a className="list-group-item">{title}</a>
-					</Link>
+					<div className="g-col-6" key={id}>
+						<div className="card mb-4 rounded-3 shadow-sm">
+							<div className="card-body">
+								<Link href={`/projects/${id}`}>
+									<a>{title}</a>
+								</Link>
+							</div>
+							<div className="card-footer">
+								<button
+									className="btn btn-outline-danger"
+									onClick={() => handleDeleteProject(id)}
+								>
+									Delete
+								</button>
+							</div>
+						</div>
+					</div>
 				))}
 			</div>
-			<hr />
+			<div className="mb-3" />
 			<h2>Create project</h2>
 			<Form onSubmit={form.formOnSubmit}>
-				<Input
-					name="title"
-					value={form.formValues.title}
-					onChange={form.formOnChange}
-				/>
+				<div className="mb-2">
+					<Input
+						name="title"
+						value={form.formValues.title}
+						onChange={form.formOnChange}
+					/>
+				</div>
 				<button className="btn btn-primary" type="submit">
 					Create Project
 				</button>

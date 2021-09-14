@@ -29,13 +29,13 @@ export class ProjectResolver {
 		return project;
 	}
 
-	@Mutation(() => Boolean)
+	@Mutation(() => Project)
 	async updateProject(
 		@Arg("id", () => Int) id: number,
 		@Arg("input", () => ProjectUpdateInput) input: ProjectUpdateInput
 	) {
-		await Project.update({ id }, input);
-		return true;
+		const project = await Project.update({ id }, input);
+		return project;
 	}
 
 	@Mutation(() => Boolean)
@@ -47,5 +47,12 @@ export class ProjectResolver {
 	@Query(() => [Project])
 	projects() {
 		return Project.find();
+	}
+
+	@Query(() => Project)
+	async project(@Arg("id", () => Int) id: number) {
+		const project = await Project.findOne({ id });
+		console.log(project)
+		return project;
 	}
 }

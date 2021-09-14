@@ -23,6 +23,10 @@ export const useForm = <S>(initialValues: S, callback: (values: S) => void) => {
     }))
   }
 
+  const formClear = () => {
+    setFormValues(initialValues)
+  }
+
   const setFormValue = (event: any) => {
     const { name, type, value, checked } = event.target
 
@@ -61,6 +65,7 @@ export const useForm = <S>(initialValues: S, callback: (values: S) => void) => {
     formOnSubmit,
     formOnChange,
     formOnChangeValue,
+    formClear,
     formValues
   }
 }

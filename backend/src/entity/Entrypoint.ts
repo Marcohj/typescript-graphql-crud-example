@@ -27,20 +27,22 @@ export class Entrypoint extends BaseEntity {
 
 	@Field()
 	@Column()
-	has_headers: boolean;
+	hasHeaders: boolean;
 
 	@Field({ nullable: true })
 	@Column({ nullable: true })
 	data: string;
 
 	@Field(() => Project, { nullable: true })
-	@ManyToOne(() => Project, (project) => project.entrypoints)
+	@ManyToOne(() => Project, (project) => project.entrypoints, {
+		onDelete: "CASCADE",
+	})
 	project: Project;
 
 	@Column()
 	projectId: number;
 
 	@Field(() => [Col], { nullable: true })
-	@OneToMany(() => Col, (col) => col.entrypoint, {lazy: true, cascade: true})
+	@OneToMany(() => Col, (col) => col.entrypoint, { lazy: true, cascade: true })
 	cols: Col[];
 }
